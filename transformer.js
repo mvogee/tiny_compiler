@@ -1,4 +1,4 @@
-import traverser from "./traverser";
+import traverser from "./traverser.js";
 
 export const transformer = (ast) => {
   let newAst = {
@@ -6,7 +6,7 @@ export const transformer = (ast) => {
     body: [],
   };
 
-  ast.context = newAst.body;
+  ast._context = newAst.body;
 
   traverser(ast, {
     NumberLiteral: {

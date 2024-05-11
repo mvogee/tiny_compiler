@@ -30,16 +30,13 @@ export const parser = (tokens) => {
     }
     if (token.type === "paren" && token.value === "(") {
       token = tokens[++current];
-      if (token.type !== "name") {
-        throw new TypeError(
-          `expected function name but got: ${token.value} instead`,
-        );
-      }
       let node = nodes.node(token.value); // this is the token.type === name
       token = tokens[++current];
 
-      while (token.type !== "paren" && token.value !== ")") {
-        token = tokens[++current];
+      while (
+        token.type !== "paren" ||
+        (token.type === "paren" && token.value !== ")")
+      ) {
         node.params.push(walk());
         token = tokens[current];
       }

@@ -10,6 +10,8 @@
 
 import tokenizer from "./tokenizer.js";
 import parser from "./parser.js";
+import transformer from "./transformer.js";
+import codeGenerator from "./generator.js";
 
 // We start by accepting an input string of code, and we're gonna set up two
 // things...
@@ -20,18 +22,21 @@ function compiler(input) {
   let tokens = tokenizer(input);
   console.log(tokens);
   let ast = parser(tokens);
-  console.log(ast.body);
+  console.log("old ast:", ast);
   ast.body.forEach((item) => console.log(item));
-  // let newAst = transformer(ast);
-  // let output = codeGenerator(newAst);
+
+  let newAst = transformer(ast);
+  console.log("\nnewAst", newAst);
+  newAst.body.forEach((item) => console.log(item));
+  let output = codeGenerator(newAst);
 
   // and simply return the output!
-  return;
+  return output;
 }
 
 function main() {
   console.log("Starting");
-  const input = "(add 2 (subtract 4 2))";
+  const input = "(add 2 2)";
   console.log(input);
   const output = compiler(input);
   console.log(output);
